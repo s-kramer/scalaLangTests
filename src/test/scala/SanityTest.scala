@@ -10,4 +10,14 @@ class SanityTest extends FlatSpec with Matchers {
       true
     }
   }
+
+  "val variable" should "remain immutable" in {
+    val i = 0
+    assertDoesNotCompile("i = 1")
+  }
+
+  "var variable" should "be able to change" in {
+    var i = 0
+    i = 1
+  }
 }
