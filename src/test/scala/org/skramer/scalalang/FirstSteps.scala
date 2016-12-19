@@ -43,4 +43,33 @@ class FirstSteps extends FlatSpecWithMatchers {
     def recursiveSize(i: Int) = if (i == 0) 0 else 1 + recursiveSize(i - 1)
   """.stripMargin)
   }
+
+  "while loop" should "iterate until false" in {
+    var i = 10
+    var sum = 0
+    assertResult(55) {
+      while (i > 0) {
+        sum += i
+        i -= 1
+      }
+      sum
+    }
+  }
+
+  "incrementation and decrementation operators" should "not compile" in {
+    var i = 0
+    assertDoesNotCompile(
+      """
+        |i++
+        |++i
+        |--i
+        |i--
+      """.stripMargin)
+  }
+
+  "foreach loop" should "call function with side effects on all elements" in {
+    val numbers = 1 to 5
+    numbers.foreach(num => println(num))
+    numbers.foreach((num: Int) => println(num))
+  }
 }
