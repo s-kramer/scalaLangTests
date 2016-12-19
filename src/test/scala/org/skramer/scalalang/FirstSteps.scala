@@ -23,6 +23,24 @@ class FirstSteps extends FlatSpecWithMatchers {
   "function definition" should "contain explicit parameter types" in {
     def max(left: Int, right: Int): Int = if (left > right) left else right
 
-    assertResult(5) { max(3, 5)}
+    assertResult(5) {
+      max(3, 5)
+    }
+  }
+
+  "void function definition" should "omit the return type or declare it Unit" in {
+    def printMax(left: Int, right: Int): Unit = if (left > right) println(left) else println(right)
+
+    def printMax2(left: Int, right: Int) = if (left > right) println(left) else println(right)
+
+    printMax(3, 5)
+    printMax2(3, 5)
+  }
+
+  "recursive functions" must "declare result type" in {
+    assertDoesNotCompile(
+      """
+    def recursiveSize(i: Int) = if (i == 0) 0 else 1 + recursiveSize(i - 1)
+  """.stripMargin)
   }
 }
