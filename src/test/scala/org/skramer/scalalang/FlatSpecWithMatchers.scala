@@ -1,3 +1,5 @@
+package org.skramer.scalalang
+
 import org.scalatest.{FlatSpec, Matchers}
 
 /**

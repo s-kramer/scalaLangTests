@@ -1,4 +1,4 @@
-import org.scalatest.{FlatSpec, Matchers}
+package org.skramer.scalalang
 
 /**
   * Created by skramer on 19.12.16.

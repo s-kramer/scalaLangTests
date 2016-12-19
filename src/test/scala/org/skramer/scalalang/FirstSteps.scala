@@ -1,7 +1,9 @@
+package org.skramer.scalalang
+
 /**
   * Created by skramer on 19.12.16.
   */
-class FirstSteps {
+class FirstSteps extends FlatSpecWithMatchers {
   "val variable" should "remain immutable" in {
     val i = 0
     assertDoesNotCompile("i = 1")
