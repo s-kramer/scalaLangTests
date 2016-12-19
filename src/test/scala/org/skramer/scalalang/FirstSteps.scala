@@ -19,4 +19,10 @@ class FirstSteps extends FlatSpecWithMatchers {
     val j = 0
     i === j
   }
+
+  "function definition" should "declare contain explicit parameter types" in {
+    def max(left: Int, right: Int): Int = if (left > right) left else right
+
+    assertResult(5) { max(3, 5)}
+  }
 }
