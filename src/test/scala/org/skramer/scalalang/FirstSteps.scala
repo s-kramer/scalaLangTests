@@ -146,4 +146,26 @@ class FirstSteps extends FlatSpecWithMatchers {
     a1 should have length 3
     a2 should have length 4
   }
+
+  "concat operator" should "concatenate two lists" in {
+    val first = List(1, 2)
+    val second = List(3, 4)
+
+    first ::: second should have size 4
+    first should have size 2
+    second should have size 2
+  }
+
+  "cons operator" should "prepend element to list" in {
+    val first = List(1, 2, 3)
+
+    first should have size 3
+    0 :: first should have size 4
+  }
+
+  "nil" should "represent empty list" in {
+    Nil should have size 0
+    1 :: 2 :: 3 :: Nil should have size 3
+  }
+
 }
