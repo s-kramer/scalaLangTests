@@ -28,4 +28,11 @@ class BasicTypesAndOperatorsTest extends FlatSpecWithMatchers {
   "f interpolator" should "use printf syntax" in {
     f"${math.Pi}%.5f" should fullyMatch regex (raw"(\d)\.(\d+)" withGroups("3", "14159"))
   }
+
+  "operator notation invocation with multiple arguments" must "use parenthesess" in {
+    assertResult(8) {
+      "hello, world" indexOf('o', 5) //operator notation
+    }
+    "hello, world".indexOf('o', 5) //non-operator notation
+  }
 }
