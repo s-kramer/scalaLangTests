@@ -168,4 +168,22 @@ class FirstSteps extends FlatSpecWithMatchers {
     1 :: 2 :: 3 :: Nil should have size 3
   }
 
+  "tuple" can "contain elements of different types" in {
+    val tuple = (1, "two", "III", 4, 'V')
+    assertResult(1) {
+      tuple._1
+    }
+    assertResult("two") {
+      tuple._2
+    }
+    assertResult("III") {
+      tuple._3
+    }
+    assertResult(4) {
+      tuple._4
+    }
+    assertResult('V') {
+      tuple._5
+    }
+  }
 }
