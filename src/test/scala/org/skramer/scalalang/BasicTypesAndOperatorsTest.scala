@@ -46,4 +46,33 @@ class BasicTypesAndOperatorsTest extends FlatSpecWithMatchers {
   "unary postfix operator" can "be called without parentheses (if it doesn't have side effects)" in {
     assert(!(("Hello, World!" toLowerCase) exists (_.isUpper)))
   }
+
+  "equality operator" should "compare objects of different types" in {
+    assertResult(false) {
+      List(1, 2, 3) == true
+    }
+  }
+
+  "equality operator" should "check left handside for null first" in {
+    assertResult(false) {
+      null == List(1, 2, 3)
+    }
+  }
+
+  "equality operator" should "compare based on the contents" in {
+    assertResult(true) {
+      List(1, 2, 3).toSet == Set(1, 2, 3)
+    }
+  }
+
+  "eq operator" should "use referential equality" in {
+    class Foo
+    val f = new Foo
+    assertResult(false) {
+      f.eq(new Foo)
+    }
+    assertResult(true) {
+      f.eq(f)
+    }
+  }
 }
