@@ -24,4 +24,36 @@ class ClassesAndObjectsTest extends FlatSpecWithMatchers {
       )
     }
   }
+
+  "semicolon" should "be placed between multiple invocations in one line" in {
+    assertCompiles("val i = 1; println(i)")
+  }
+
+  "method chaining" should "use operator as last statement" in {
+    val i = 1
+    val j = 2
+    val k = 3
+    assertResult(6) {
+      val sum = i +
+        j +
+        k
+      sum
+    }
+  }
+
+  "companion object" can "access private fields of companion class" in {
+    class Foo {
+      private val bar = 1
+    }
+
+    object Foo {
+      def hello(f: Foo): Unit = {
+        assertCompiles(
+          """
+            |f.bar
+          """.stripMargin)
+      }
+    }
+  }
+
 }
