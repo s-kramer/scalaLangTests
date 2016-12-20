@@ -112,9 +112,11 @@ class FirstSteps extends FlatSpecWithMatchers {
       def apply(): Hello = new Hello(true)
     }
 
-    val h: Hello = new Hello(false)
-    val appliedHello: Hello = h()
+    val h = new Hello(false)
+    val appliedHello = h()
+    val explicitHello = h.apply()
     assert(appliedHello.called)
+    assert(explicitHello.called)
     assert(!h.called)
   }
 }
