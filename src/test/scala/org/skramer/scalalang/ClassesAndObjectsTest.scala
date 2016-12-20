@@ -78,4 +78,15 @@ class ClassesAndObjectsTest extends FlatSpecWithMatchers {
 
   }
 
+  "symbols" should "represent their names" in {
+    val symbol: Symbol = 'symbol
+    assertResult("symbol") {
+      symbol.name
+    }
+  }
+
+  "symbols" should "be internalized" in {
+    val symbol: Symbol = 'symbol
+    symbol should be theSameInstanceAs Symbol("symbol")
+  }
 }
