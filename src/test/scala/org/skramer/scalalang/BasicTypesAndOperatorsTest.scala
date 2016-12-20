@@ -35,4 +35,15 @@ class BasicTypesAndOperatorsTest extends FlatSpecWithMatchers {
     }
     "hello, world".indexOf('o', 5) //non-operator notation
   }
+
+  "unary prefix operator" should "have shorthand version" in {
+    val minusTwo = -2
+    assertResult(minusTwo) {
+      2.unary_-
+    }
+  }
+
+  "unary postfix operator" can "be called without parentheses (if it doesn't have side effects)" in {
+    assert(!(("Hello, World!" toLowerCase) exists (_.isUpper)))
+  }
 }
