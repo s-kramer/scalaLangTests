@@ -56,4 +56,26 @@ class ClassesAndObjectsTest extends FlatSpecWithMatchers {
     }
   }
 
+  "singleton object" should "be initialized on first usage" in {
+    var bar = 0
+    object Foo {
+      bar = 1
+
+      def dummy(): Unit = {
+
+      }
+    }
+
+    assertResult(0) {
+      bar
+    }
+
+    Foo.dummy()
+
+    assertResult(1) {
+      bar
+    }
+
+  }
+
 }
