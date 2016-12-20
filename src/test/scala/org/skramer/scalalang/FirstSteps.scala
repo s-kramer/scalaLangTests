@@ -1,5 +1,7 @@
 package org.skramer.scalalang
 
+import scala.collection.mutable
+
 /**
   * Created by skramer on 19.12.16.
   */
@@ -204,7 +206,7 @@ class FirstSteps extends FlatSpecWithMatchers {
   }
 
   "mutable set" can "be extended with new elements" in {
-    val set = scala.collection.mutable.Set("one", "two")
+    val set = mutable.Set("one", "two")
     set += "three"
     set should have size 3
   }
