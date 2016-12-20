@@ -210,4 +210,10 @@ class FirstSteps extends FlatSpecWithMatchers {
     set += "three"
     set should have size 3
   }
+
+  "immutable set" can "use += too" in {
+    var set = Set(1, 2)
+    set += 3
+    set should have size 3
+  }
 }
