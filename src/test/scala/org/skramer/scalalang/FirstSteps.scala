@@ -106,4 +106,15 @@ class FirstSteps extends FlatSpecWithMatchers {
       concatenated
     }
   }
+
+  "parentheses" should "invoke apply method" in {
+    class Hello(val called: Boolean) {
+      def apply(): Hello = new Hello(true)
+    }
+
+    val h: Hello = new Hello(false)
+    val appliedHello: Hello = h()
+    assert(appliedHello.called)
+    assert(!h.called)
+  }
 }
