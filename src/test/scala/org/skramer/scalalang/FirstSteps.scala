@@ -5,8 +5,11 @@ package org.skramer.scalalang
   */
 class FirstSteps extends FlatSpecWithMatchers {
   "val variable" should "remain immutable" in {
-    val i = 0
-    assertDoesNotCompile("i = 1")
+    assertDoesNotCompile(
+      """
+        |val i = 0
+        |i = 1
+      """.stripMargin)
   }
 
   "var variable" should "be able to change" in {
@@ -57,9 +60,9 @@ class FirstSteps extends FlatSpecWithMatchers {
   }
 
   "incrementation and decrementation operators" should "not compile" in {
-    var i = 0
     assertDoesNotCompile(
       """
+        |var i = 0
         |i++
         |++i
         |--i
@@ -88,7 +91,7 @@ class FirstSteps extends FlatSpecWithMatchers {
     }
   }
 
-  "parameterized array" should "be iterable" in {
+  "parametrized array" should "be iterable" in {
     assertResult("Hello cruel world ") {
       var concatenated = ""
       val strings = new Array[String](3)
