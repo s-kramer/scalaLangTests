@@ -138,4 +138,12 @@ class FirstSteps extends FlatSpecWithMatchers {
       f.lastIndex
     }
   }
+
+  "array's companion apply method" should "create new array" in {
+    val a1 = Array("zero", "one", "two")
+    val a2 = Array.apply("zero", "one", "two", "three")
+
+    a1 should have length 3
+    a2 should have length 4
+  }
 }
