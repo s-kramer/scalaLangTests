@@ -71,5 +71,36 @@ class FirstSteps extends FlatSpecWithMatchers {
     val numbers = 1 to 5
     numbers.foreach(num => println(num))
     numbers.foreach((num: Int) => println(num))
+    numbers.foreach(println)
+
+    val m = Map[Int, Char](1 -> 'a', 2 -> 'b')
+    m.foreach { case (i, j) => println(s"$i is bound to $j") }
+  }
+
+  "for expression" should "surprisingly, iterate over elements from generator" in {
+    var sum = 0
+    assertResult(15) {
+      for (number <- 1 to 5) {
+        sum += number
+      }
+
+      sum
+    }
+  }
+
+  "parameterized array" should "be iterable" in {
+    assertResult("Hello cruel world ") {
+      var concatenated = ""
+      val strings = new Array[String](3)
+      strings(0) = "Hello"
+      strings(1) = "cruel"
+      strings(2) = "world"
+
+      for (string <- strings) {
+        concatenated += string + " "
+      }
+
+      concatenated
+    }
   }
 }
