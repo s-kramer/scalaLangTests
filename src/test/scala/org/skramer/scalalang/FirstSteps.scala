@@ -119,4 +119,23 @@ class FirstSteps extends FlatSpecWithMatchers {
     assert(explicitHello.called)
     assert(!h.called)
   }
+
+  "parentheses assignment" should "invoke update method" in {
+    class FooCollection() {
+      var lastIndex = 0
+      var lastValue = true
+
+      def update(index: Int, value: Boolean): Unit = {
+        lastIndex = index
+        lastValue = value
+      }
+    }
+
+    val f = new FooCollection
+    f(1) = false
+    assert(!f.lastValue)
+    assertResult(1) {
+      f.lastIndex
+    }
+  }
 }
