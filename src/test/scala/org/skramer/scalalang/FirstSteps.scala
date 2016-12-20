@@ -186,4 +186,26 @@ class FirstSteps extends FlatSpecWithMatchers {
       tuple._5
     }
   }
+
+  "immutable set" can "not be extended with another element " in {
+    assertDoesNotCompile(
+      """
+        | val s = Set("one", "two")
+        | s += two
+      """.stripMargin)
+  }
+
+  "new set" can "be created using old one" in {
+    val set = Set("one", "two")
+    val extendedSet = set + "three"
+
+    set should have size 2
+    extendedSet should have size 3
+  }
+
+  "mutable set" can "be extended with new elements" in {
+    val set = scala.collection.mutable.Set("one", "two")
+    set += "three"
+    set should have size 3
+  }
 }
