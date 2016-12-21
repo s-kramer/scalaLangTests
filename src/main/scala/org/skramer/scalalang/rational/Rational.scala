@@ -17,8 +17,32 @@ class Rational(nom: Int, denom: Int) {
     new Rational(nominator * other.denominator + other.nominator * denominator, denominator * other.denominator)
   }
 
+  def -(other: Rational): Rational = {
+    new Rational(nominator * other.denominator - other.nominator * denominator, denominator * other.denominator)
+  }
+
   def *(other: Rational): Rational = {
     new Rational(nominator * other.nominator, denominator * other.denominator)
+  }
+
+  def /(other: Rational): Rational = {
+    new Rational(nominator * other.denominator, denominator * other.nominator)
+  }
+
+  def +(other: Int): Rational = {
+    new Rational(nominator + other * denominator, denominator)
+  }
+
+  def -(other: Int): Rational = {
+    new Rational(nominator - other * denominator, denominator)
+  }
+
+  def *(other: Int): Rational = {
+    new Rational(nominator * other, denominator)
+  }
+
+  def /(other: Int): Rational = {
+    new Rational(nominator, other * denominator)
   }
 
   private def gcd(a: Int, b: Int): Int = if (b == 0) a.abs else gcd(b, a % b)

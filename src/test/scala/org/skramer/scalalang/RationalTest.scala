@@ -62,4 +62,48 @@ class RationalTest extends FlatSpecWithMatchers {
     result.nominator shouldBe 1
     result.denominator shouldBe 1
   }
+
+  "rational subtraction" should "work" in {
+    val r1 = new Rational(1, 2)
+    val r2 = new Rational(3, 4)
+    val difference = r2 - r1
+    difference.nominator shouldBe 1
+    difference.denominator shouldBe 4
+  }
+
+  "rational division" should "work" in {
+    val r1 = new Rational(1, 2)
+    val r2 = new Rational(3, 4)
+    val quotient = r2 / r1
+    quotient.nominator shouldBe 3
+    quotient.denominator shouldBe 2
+  }
+
+  "adding rational and int" should "work" in {
+    val r1 = new Rational(1, 2)
+    val sum = r1 + 2
+    sum.nominator shouldBe 5
+    sum.denominator shouldBe 2
+  }
+
+  "subtracting rational and int" should "work" in {
+    val r1 = new Rational(1, 2)
+    val sum = r1 - 2
+    sum.nominator shouldBe -3
+    sum.denominator shouldBe 2
+  }
+
+  "multiplying rational and int" should "work" in {
+    val r1 = new Rational(1, 2)
+    val sum = r1 * 2
+    sum.nominator shouldBe 1
+    sum.denominator shouldBe 1
+  }
+
+  "dividing rational and int" should "work" in {
+    val r1 = new Rational(1, 2)
+    val sum = r1 / 2
+    sum.nominator shouldBe 1
+    sum.denominator shouldBe 4
+  }
 }
