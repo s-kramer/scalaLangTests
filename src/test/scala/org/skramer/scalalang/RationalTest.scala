@@ -33,4 +33,10 @@ class RationalTest extends FlatSpecWithMatchers {
     r.nominator shouldBe 5
     r.denominator shouldBe 1
   }
+
+  "values passed to rational constructor" should "get normalized" in {
+    val r = new Rational(77, 14)
+    r.nominator shouldBe 11
+    r.denominator shouldBe 2
+  }
 }

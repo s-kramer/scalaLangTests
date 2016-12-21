@@ -3,8 +3,11 @@ package org.skramer.scalalang.rational
 /**
   * Created by skramer on 21.12.16.
   */
-class Rational(val nominator: Int, val denominator: Int) {
-  require(denominator != 0)
+class Rational(nom: Int, denom: Int) {
+  require(denom != 0)
+  private val currentGcd = gcd(nom, denom)
+  val nominator: Int = nom / currentGcd
+  val denominator: Int = denom / currentGcd
 
   def this(nominator: Int) = this(nominator, 1)
 
@@ -13,4 +16,6 @@ class Rational(val nominator: Int, val denominator: Int) {
   def add(other: Rational): Rational = {
     new Rational(nominator * other.denominator + other.nominator * denominator, denominator * other.denominator)
   }
+
+  private def gcd(a: Int, b: Int): Int = if (b == 0) a.abs else gcd(b, a % b)
 }
