@@ -13,8 +13,12 @@ class Rational(nom: Int, denom: Int) {
 
   override def toString: String = s"$nominator / $denominator"
 
-  def add(other: Rational): Rational = {
+  def +(other: Rational): Rational = {
     new Rational(nominator * other.denominator + other.nominator * denominator, denominator * other.denominator)
+  }
+
+  def *(other: Rational): Rational = {
+    new Rational(nominator * other.nominator, denominator * other.denominator)
   }
 
   private def gcd(a: Int, b: Int): Int = if (b == 0) a.abs else gcd(b, a % b)
