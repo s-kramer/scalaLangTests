@@ -106,4 +106,14 @@ class RationalTest extends FlatSpecWithMatchers {
     sum.nominator shouldBe 1
     sum.denominator shouldBe 4
   }
+
+  "implicit conversion" should "enable multiplying int by rational" in {
+    val r = new Rational(3, 4)
+
+    implicit def intToRational(value: Int): Rational = new Rational(value)
+
+    val product: Rational = 2 * r
+    product.nominator shouldBe 3
+    product.denominator shouldBe 2
+  }
 }
