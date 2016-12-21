@@ -28,4 +28,9 @@ class RationalTest extends FlatSpecWithMatchers {
     sum.denominator shouldBe 6
   }
 
+  "rationales with default denominator" can "be created without specifying denominator" in {
+    val r = new Rational(5)
+    r.nominator shouldBe 5
+    r.denominator shouldBe 1
+  }
 }

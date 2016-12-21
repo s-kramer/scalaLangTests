@@ -6,6 +6,8 @@ package org.skramer.scalalang.rational
 class Rational(val nominator: Int, val denominator: Int) {
   require(denominator != 0)
 
+  def this(nominator: Int) = this(nominator, 1)
+
   override def toString: String = s"$nominator / $denominator"
 
   def add(other: Rational): Rational = {
