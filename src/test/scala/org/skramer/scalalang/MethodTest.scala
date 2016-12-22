@@ -113,4 +113,31 @@ class MethodTest extends FlatSpecWithMatchers {
     f(arg1 = 0) shouldBe 11
     f(arg1 = 12, arg2 = 8) shouldBe 128
   }
+
+  "tail call optimization" should "be applied automatically where possible" in {
+
+    def throwAfterNIterations(n: Int): Int = {
+      if (n == 0) throw new RuntimeException
+      else throwAfterNIterations(n - 1)
+    }
+
+    val ex = intercept[RuntimeException] {
+      throwAfterNIterations(3)
+    }
+
+    ex.getStackTrace.count(ste => ste.getMethodName.contains("throwAfterNIterations")) should be <= 3
+  }
+
+  "tail call optimization" can "not be applied if recursive call is not last" in {
+    def throwAfterNIterations(n: Int): Int = {
+      if (n == 0) throw new RuntimeException
+      else throwAfterNIterations(n - 1) + 1
+    }
+
+    val ex = intercept[RuntimeException] {
+      throwAfterNIterations(3)
+    }
+
+    ex.getStackTrace.count(ste => ste.getMethodName.contains("throwAfterNIterations")) should be > 3
+  }
 }
