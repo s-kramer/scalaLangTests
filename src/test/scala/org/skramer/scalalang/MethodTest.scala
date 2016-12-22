@@ -14,4 +14,19 @@ class MethodTest extends FlatSpecWithMatchers {
     foo(1) shouldBe 2
   }
 
+  "reassignable function literal" should "be able to change" in {
+    var f = (x: Int) => x + 1
+    f(1) shouldBe 2
+    f = (x: Int) => x + 5
+    f(1) shouldBe 6
+  }
+
+  "underscore notation" should "create function values" in {
+    List(1, 2, 3, 4, 5).filter(_ >= 5) shouldBe List(5)
+  }
+
+  "multiple underscores" should "refer to subsequent arguments" in {
+    val f = (_: Int) + (_: Int)
+    f(1, 2) shouldBe 3
+  }
 }
