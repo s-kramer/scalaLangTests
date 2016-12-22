@@ -38,11 +38,11 @@ class MethodTest extends FlatSpecWithMatchers {
   "it" should "also wait for all remaining arguments" in {
     def sum(i: Int, j: Int, k: Int) = i + j + k
 
-    val f3: (Int, Int, Int) => Int = sum
-    val f2: (Int, Int) => Int = f3(1, _: Int, _: Int)
+    val f3 = sum _
+    val f2 = f3(1, _: Int, _: Int)
     // explicit types of underscores required as they constitute a function value only, not eta expansion
     // http://stackoverflow.com/questions/2363013/in-scala-why-cant-i-partially-apply-a-function-without-explicitly-specifying-i
-    val f1: (Int) => Int = f2(2, _: Int)
+    val f1 = f2(2, _: Int)
 
     f1(3) shouldBe 6
   }
