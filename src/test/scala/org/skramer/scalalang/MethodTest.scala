@@ -99,4 +99,18 @@ class MethodTest extends FlatSpecWithMatchers {
     val args = Array("1", "2", "15")
     f(args: _*) shouldBe "1 2 15"
   }
+
+  "named arguments" can "be provided out of order" in {
+    def f(arg1: Int, arg2: Int): Int = 10 * arg1 + arg2
+
+    f(arg2 = 11, arg1 = 5) shouldBe 61
+  }
+
+  "named and default parameters" should "mix with each other" in {
+    def f(arg1: Int = 5, arg2: Int = 11): Int = 10 * arg1 + arg2
+
+    f() shouldBe 61
+    f(arg1 = 0) shouldBe 11
+    f(arg1 = 12, arg2 = 8) shouldBe 128
+  }
 }
