@@ -78,4 +78,14 @@ class ControlStructuresTest extends FlatSpecWithMatchers {
     matcher("bu") shouldBe "hu"
     matcher("potato") shouldBe "unknown"
   }
+
+  "variable in nested scope" should "shadow the variable in enclosing scope" in {
+    var a = 1;
+    {
+      var a = 2
+      a shouldBe 2
+    }
+
+    a shouldBe 1
+  }
 }
