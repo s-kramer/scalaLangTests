@@ -80,4 +80,23 @@ class MethodTest extends FlatSpecWithMatchers {
     (1 to 5).foreach(sum += _)
     sum shouldBe 15
   }
+
+  "vararg" should "generate multiple arguments" in {
+    def f(strings: String*): String = {
+      strings.mkString(" ")
+    }
+
+    f("1") shouldBe "1"
+    f("1", "2") shouldBe "1 2"
+    f("1", "2", "15") shouldBe "1 2 15"
+  }
+
+  "vararg method" can "accept extracted array" in {
+    def f(strings: String*): String = {
+      strings.mkString(" ")
+    }
+
+    val args = Array("1", "2", "15")
+    f(args: _*) shouldBe "1 2 15"
+  }
 }
