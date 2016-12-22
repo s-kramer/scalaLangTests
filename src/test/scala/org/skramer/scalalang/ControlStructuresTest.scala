@@ -63,4 +63,19 @@ class ControlStructuresTest extends FlatSpecWithMatchers {
 
     f() shouldBe 4
   }
+
+  "match expression" should "select correct case" in {
+    def matcher(variable: String): String = {
+      variable match {
+        case "hello" => "world"
+        case "big" => "bang"
+        case "bu" => "hu"
+        case _ => "unknown"
+      }
+    }
+
+    matcher("hello") shouldBe "world"
+    matcher("bu") shouldBe "hu"
+    matcher("potato") shouldBe "unknown"
+  }
 }
