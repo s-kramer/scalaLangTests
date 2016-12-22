@@ -56,4 +56,28 @@ class MethodTest extends FlatSpecWithMatchers {
 
     f1(3) shouldBe 6
   }
+
+  "closure" should "fail if free variable is not found" in {
+    //    val secondParam = 2
+    assertDoesNotCompile(
+      """
+        |val f = (x: Int) => x + secondParam
+        |f(2)
+      """.stripMargin)
+  }
+
+  "closure" should "use free variable available during its creation (invocation)" in {
+    var secondParam = 2
+    val f = (x: Int) => x + secondParam
+    f(5) shouldBe 7
+
+    secondParam = 15
+    f(5) shouldBe 20
+  }
+
+  "clojure" can "modify free variable" in {
+    var sum = 0
+    (1 to 5).foreach(sum += _)
+    sum shouldBe 15
+  }
 }
