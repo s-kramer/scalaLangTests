@@ -26,4 +26,41 @@ class ControlStructuresTest extends FlatSpecWithMatchers {
     numbers shouldBe List(18, 24, 30)
 
   }
+
+  "throw clause" should "be a subtype of all types" in {
+    assertCompiles(
+      """
+        |if (false) 2
+        |else throw new RuntimeException
+      """.stripMargin)
+  }
+
+  "exception catching" should "use pattern matching" in {
+    try {
+      if (false) 2 else throw new RuntimeException
+      fail("should have thrown an exception")
+    } catch {
+      case ex: RuntimeException => succeed
+    }
+  }
+
+  "finally block without explicit return" should "not change returned value" in {
+    def f(): Int = try {
+      2
+    } finally {
+      4
+    }
+
+    f() shouldBe 2
+  }
+
+  "finally block with explicit return" should "change returned value" in {
+    def f(): Int = try {
+      return 2
+    } finally {
+      return 4
+    }
+
+    f() shouldBe 4
+  }
 }
