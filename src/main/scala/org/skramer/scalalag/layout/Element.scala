@@ -5,9 +5,19 @@ package org.skramer.scalalag.layout
   */
 abstract class Element {
   require(content.nonEmpty)
+
   val width: Int = content(0).length
 
   val height: Int = content.length
 
   def content: Array[String]
+
+  def beside(other: Element): Element = {
+    new ArrayElement(for {(line1, line2) <- content zip other.content}
+      yield line1 + line2)
+  }
+
+  def above(other: Element): Element = {
+    new ArrayElement(content ++ other.content)
+  }
 }

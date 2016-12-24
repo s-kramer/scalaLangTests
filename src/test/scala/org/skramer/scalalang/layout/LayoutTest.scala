@@ -27,4 +27,24 @@ class LayoutTest extends FlatSpecWithMatchers {
     assert(uniformElement.width == 5)
     assert(uniformElement.height == 2)
   }
+
+  "element's content" can "be widen" in {
+    val first = new LineElement("hello")
+    val second = new LineElement("world")
+
+    val widen = first beside second
+
+    assert(widen.width == "hello".length + "world".length)
+    assert(widen.height == 1)
+  }
+
+  "element's content" can "be broaden" in {
+    val first = new LineElement("hello")
+    val second = new LineElement("world")
+
+    val extended = first above second
+
+    assert(extended.width == "hello".length)
+    assert(extended.height == 2)
+  }
 }
