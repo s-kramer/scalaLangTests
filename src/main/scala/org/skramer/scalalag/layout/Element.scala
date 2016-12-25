@@ -20,4 +20,6 @@ abstract class Element {
   def above(other: Element): Element = {
     new ArrayElement(content ++ other.content)
   }
+
+  override def toString = s"Element($width, $height, $content)"
 }
