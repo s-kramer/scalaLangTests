@@ -23,3 +23,13 @@ abstract class Element {
 
   override def toString = s"Element($width, $height, $content)"
 }
+
+object Element {
+
+  def apply(content: Array[String]): Element = new ArrayElement(content)
+
+  def apply(content: String): Element = new LineElement(content)
+
+  def apply(char: Char, width: Int, height: Int): Element = new UniformElement(char, width, height)
+
+}
