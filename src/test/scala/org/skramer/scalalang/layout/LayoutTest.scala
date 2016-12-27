@@ -47,4 +47,44 @@ class LayoutTest extends FlatSpecWithMatchers {
     assert(extended.width == "hello".length)
     assert(extended.height == 2)
   }
+
+  "elements with different widths" can "be put above each other" in {
+    val first = Element("hello")
+    val second = Element("long text")
+
+    val extended = first above second
+
+    extended.width shouldBe "long text".length
+    extended.height shouldBe 2
+    extended.content(0) shouldBe "  hello  "
+    extended.content(1) shouldBe "long text"
+  }
+
+  "elements with different heights" can "be put beside each other" in {
+    val first = Element(Array("hello", "world"))
+    val second = Element(Array("hello"))
+
+    val extended = first beside second
+
+    extended.width shouldBe "hellohello".length
+    extended.height shouldBe 2
+  }
+
+  "elements with different widths and heights" can "be put above each other" in {
+    val first = Element(Array("hello", "world"))
+    val longText = "this is a very long text"
+    val second = Element(Array(longText))
+
+    val extended = first above second
+
+    extended.width shouldBe longText.length
+    extended.height shouldBe 3
+    extended.content(0) shouldBe " " * 9 + "hello" + " " * 10
+    extended.content(1) shouldBe " " * 9 + "world" + " " * 10
+    extended.content(2) shouldBe longText
+  }
+
+  "array elements with inconsistent widths" should "throw" in {
+    assertThrows[IllegalArgumentException](Element(Array("hello", "very long text")))
+  }
 }
