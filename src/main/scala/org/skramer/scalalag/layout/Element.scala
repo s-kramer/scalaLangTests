@@ -7,7 +7,9 @@ abstract class Element {
   require(content.forall(_.length == content(0).length))
 
   private def widen(minimalWidth: Int) = {
-    if (width >= minimalWidth) this
+    if (width >= minimalWidth) {
+      this
+    }
     else {
       val left = Element(' ', (minimalWidth - width) / 2, height)
       val right = Element(' ', minimalWidth - width - left.width, height)
@@ -16,7 +18,9 @@ abstract class Element {
   }
 
   def heighten(minimalHeight: Int): Element = {
-    if (height >= minimalHeight) this
+    if (height >= minimalHeight) {
+      this
+    }
     else {
       val upper = Element(' ', width, (minimalHeight - height) / 2)
       val lower = Element(' ', width, minimalHeight - height - upper.height)
@@ -43,7 +47,7 @@ abstract class Element {
     new ArrayElement(this1.content ++ that1.content)
   }
 
-  override def toString
+  override def toString: String
 
   = s"Element($width, $height, ${content.mkString("\n")})"
 }
