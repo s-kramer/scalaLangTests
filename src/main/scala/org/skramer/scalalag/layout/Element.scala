@@ -47,9 +47,7 @@ abstract class Element {
     new ArrayElement(this1.content ++ that1.content)
   }
 
-  override def toString: String
-
-  = s"Element($width, $height, ${content.mkString("\n")})"
+  override def toString: String = s"${content.mkString("\n")}"
 }
 
 object Element {
