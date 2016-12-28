@@ -25,4 +25,15 @@ class TraitTest extends FlatSpecWithMatchers {
     e.getValue shouldBe e.MyMagicNumber
   }
 
+  "class with mixin" can "override the method from the trait" in {
+    class Empty extends Hello {
+      final val NewMagicNumber: Int = 15
+
+      override def getValue: Int = NewMagicNumber
+    }
+
+    val e = new Empty
+    e.getValue shouldBe e.NewMagicNumber
+  }
+
 }
