@@ -48,6 +48,22 @@ abstract class Element {
   }
 
   override def toString: String = s"${content.mkString("\n")}"
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Element]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Element =>
+      (that canEqual this) &&
+        width == that.width &&
+        height == that.height &&
+        (content sameElements that.content)
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(width, height, content)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }
 
 object Element {
