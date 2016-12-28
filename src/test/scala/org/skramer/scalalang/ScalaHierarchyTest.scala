@@ -40,4 +40,16 @@ class ScalaHierarchyTest extends FlatSpecWithMatchers {
     v.value shouldBe argument
     v.toString shouldBe s"myValue: $argument"
   }
+
+  "Nothing" should "derive from every class" in {
+    class Foo
+    def throwRuntimeException: Nothing = {
+      throw new RuntimeException
+    }
+
+    def f: Foo = if (false) new Foo else throwRuntimeException
+
+    assertThrows[RuntimeException](f)
+    // todo: add aType assertion
+  }
 }
