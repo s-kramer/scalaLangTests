@@ -28,4 +28,16 @@ class ScalaHierarchyTest extends FlatSpecWithMatchers {
         |new Int(5)
       """.stripMargin)
   }
+
+  "new value class" can "be defined by subclassing AnyVal with only one field" in {
+    class MyNewVal(val value: Int) {
+      //backed by int
+      override def toString: String = s"myValue: $value"
+    }
+
+    val argument = 15
+    val v = new MyNewVal(argument)
+    v.value shouldBe argument
+    v.toString shouldBe s"myValue: $argument"
+  }
 }
