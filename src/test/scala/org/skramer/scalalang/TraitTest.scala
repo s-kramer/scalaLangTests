@@ -4,9 +4,12 @@ package org.skramer.scalalang
   * Created by skramer on 28.12.16.
   */
 trait Hello {
-  private[scalalang] final val MyMagicNumber: Int = 5
+  val MyMagicNumber: Int = Hello.MyMagicNumber
+}
 
-  def getValue: Int = MyMagicNumber
+// TODO: suppress findbugs false positives
+object Hello {
+  val MyMagicNumber: Int = 5
 }
 
 class TraitTest extends FlatSpecWithMatchers {
@@ -14,26 +17,28 @@ class TraitTest extends FlatSpecWithMatchers {
 
     val h = new Hello {}
     class Empty extends Hello
-    // todo: why an object has to be created here? 
     // TODO: move magic number definition to class that mixes in the trait
-    (new Empty).getValue shouldBe h.MyMagicNumber
+    (new Empty).MyMagicNumber shouldBe h.MyMagicNumber
   }
 
   "trait" can "be mixed in during object creation" in {
     class Empty
     val e = new Empty with Hello
-    e.getValue shouldBe e.MyMagicNumber
+    e.MyMagicNumber shouldBe Hello.MyMagicNumber
   }
 
   "class with mixin" can "override the method from the trait" in {
     class Empty extends Hello {
-      final val NewMagicNumber: Int = 15
+      // note: val must be used here to override, you cannot override a val with a def
+      override val MyMagicNumber: Int = Empty.NewMagicNumber
+    }
 
-      override def getValue: Int = NewMagicNumber
+    object Empty {
+      final val NewMagicNumber: Int = 15
     }
 
     val e = new Empty
-    e.getValue shouldBe e.NewMagicNumber
+    e.MyMagicNumber shouldBe Empty.NewMagicNumber
   }
 
 }
