@@ -19,4 +19,10 @@ class TraitTest extends FlatSpecWithMatchers {
     (new Empty).getValue shouldBe h.MyMagicNumber
   }
 
+  "trait" can "be mixed in during object creation" in {
+    class Empty
+    val e = new Empty with Hello
+    e.getValue shouldBe e.MyMagicNumber
+  }
+
 }
