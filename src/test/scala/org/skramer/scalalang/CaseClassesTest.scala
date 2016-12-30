@@ -139,5 +139,17 @@ class CaseClassesTest extends FlatSpecWithMatchers {
 
     result shouldBe Num(1)
   }
+
+  "pattern matching" can "have pattern guards" in {
+    Num(15) match {
+      case Num(v) if v == 1 => fail
+      case Num(v) if v >= 15 => succeed
+    }
+
+    BinOp("op", Num(1), Num(1)) match {
+      //      case BinOp(_, x, x) => succeed // This can't work
+      case BinOp(_, x, y) if x == y => succeed // this matches only if two operands are equal
+    }
+  }
 }
 
