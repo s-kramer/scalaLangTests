@@ -47,4 +47,40 @@ class CaseClassesTest extends FlatSpecWithMatchers {
 
     result shouldBe 15
   }
+
+  "pattern matching" should "recognize constants by uppercase" in {
+    import math.Pi
+    val result = 3.14 match {
+      case Pi => "pi"
+      case pi => "not a pi"
+    }
+
+    result shouldBe "not a pi"
+  }
+
+  "pattern matching" can "enforce lowercase to be recognized as constant by backtics" in {
+    import math.{Pi => pi}
+    val result = math.Pi match {
+      case `pi` => "pi"
+      case notAPi => "not a pi"
+    }
+
+    result shouldBe "pi"
+  }
+
+  "pattern matching" should "support deep matching" in {
+    class Expr
+    case class Var(name: String) extends Expr
+    case class Number(num: Int) extends Expr
+    case class UnOp(op: String, arg: Expr) extends Expr
+    case class BinOp(op: String, left: Expr, right: Expr) extends Expr
+
+    def threeLevelDeepMatch(expr: Expr): Boolean = expr match {
+      case BinOp(_, _, Number(0)) => true
+      case _ => false
+    }
+
+    threeLevelDeepMatch(BinOp("", Var("variable"), Number(0))) should be(true)
+  }
+
 }
