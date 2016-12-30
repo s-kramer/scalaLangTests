@@ -50,6 +50,5 @@ class ScalaHierarchyTest extends FlatSpecWithMatchers {
     def f: Foo = if (false) new Foo else throwRuntimeException
 
     assertThrows[RuntimeException](f)
-    // todo: add aType assertion
   }
 }
