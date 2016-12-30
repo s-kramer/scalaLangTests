@@ -4,6 +4,8 @@ import java.awt.Point
 
 import org.skramer.scalalang.rational.Rational
 
+import scala.collection.mutable.ArrayBuffer
+
 /**
   * Created by skramer on 28.12.16.
   */
@@ -95,6 +97,42 @@ class TraitTest extends FlatSpecWithMatchers {
     assert(first <= second)
     assert(!(first > second))
     assert(!(first < second))
+  }
+
+  "stackable modifications" should "be invoked in correct order" in {
+    class IntQueue {
+      val queue = new ArrayBuffer[Int]()
+
+      def put(value: Int): Unit = queue.append(value)
+
+      def get: List[Int] = queue.toList
+    }
+
+    trait Doubling extends IntQueue {
+      override def put(value: Int): Unit = super.put(2 * value)
+    }
+
+    trait Incrementing extends IntQueue {
+      override def put(value: Int): Unit = super.put(value + 1)
+    }
+
+    trait Filtering extends IntQueue {
+      override def put(value: Int): Unit = if (value >= 0) super.put(value)
+    }
+
+    val filteringIncrementingDoublingQueue = new IntQueue with Doubling with Incrementing with Filtering
+    filteringIncrementingDoublingQueue.put(-1)
+    filteringIncrementingDoublingQueue.put(0)
+    filteringIncrementingDoublingQueue.put(1)
+
+    filteringIncrementingDoublingQueue.get shouldBe List(2, 4)
+
+    val doublingIncrementingFilteringQueue = new IntQueue with Filtering with Incrementing with Doubling
+    doublingIncrementingFilteringQueue.put(-1)
+    doublingIncrementingFilteringQueue.put(0)
+    doublingIncrementingFilteringQueue.put(1)
+
+    doublingIncrementingFilteringQueue.get shouldBe List(1, 3)
   }
 
 }
