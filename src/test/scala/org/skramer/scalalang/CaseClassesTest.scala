@@ -23,4 +23,12 @@ class CaseClassesTest extends FlatSpecWithMatchers {
     second.val1 shouldBe 5
     second.val2 shouldBe 15
   }
+
+  "case classes" can "be pattern matched" in {
+    case class Foo(v: Int, k: String)
+    Foo(5, "bar") match {
+      case Foo(_, "bar") => succeed
+      case _ => fail()
+    }
+  }
 }
