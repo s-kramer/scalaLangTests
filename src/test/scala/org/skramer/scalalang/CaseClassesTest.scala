@@ -27,8 +27,24 @@ class CaseClassesTest extends FlatSpecWithMatchers {
   "case classes" can "be pattern matched" in {
     case class Foo(v: Int, k: String)
     Foo(5, "bar") match {
-      case Foo(_, "bar") => succeed
+      case Foo(v, "bar") => v shouldBe 5
       case _ => fail()
     }
+  }
+
+  "pattern matching" should "throw if none of the patterns matched" in {
+    assertThrows[MatchError](
+      5 match {
+        case 11 => succeed
+      }
+    )
+  }
+
+  "match" should "be an expression and return a value" in {
+    val result = "foo" match {
+      case "foo" => 15
+    }
+
+    result shouldBe 15
   }
 }
