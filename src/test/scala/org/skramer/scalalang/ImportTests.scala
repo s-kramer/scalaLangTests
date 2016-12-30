@@ -43,6 +43,10 @@ class ImportTests extends FlatSpecWithMatchers {
     }
 
     checkFoo(new Foo)
+  }
 
+  "package object" can "be reached from class in the same package" in {
+    helperMethod shouldBe 15
+    assertCompiles("helperMethod")
   }
 }
