@@ -71,4 +71,17 @@ class TraitTest extends FlatSpecWithMatchers {
     s.area shouldBe 25
   }
 
+  "ordered trait" should "influence sorting" in {
+    class Foo(val value: Int) extends Ordered[Foo] {
+      override def compare(that: Foo): Int = value - that.value
+    }
+
+    val f = new Foo(5)
+    val k = new Foo(15)
+    assert(f < k)
+    assert(f <= k)
+    assert(!(f > k))
+    assert(!(f >= k))
+  }
+
 }
