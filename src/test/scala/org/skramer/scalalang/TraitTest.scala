@@ -2,6 +2,8 @@ package org.skramer.scalalang
 
 import java.awt.Point
 
+import org.skramer.scalalang.rational.Rational
+
 /**
   * Created by skramer on 28.12.16.
   */
@@ -82,6 +84,17 @@ class TraitTest extends FlatSpecWithMatchers {
     assert(f <= k)
     assert(!(f > k))
     assert(!(f >= k))
+  }
+
+  "ordered rational" should "compare using fractional rules" in {
+    val first, second = new Rational(1, 2) with Ordered[Rational] {
+      override def compare(that: Rational): Int = nominator * that.denominator - that.nominator * denominator
+    }
+
+    assert(first >= second)
+    assert(first <= second)
+    assert(!(first > second))
+    assert(!(first < second))
   }
 
 }
