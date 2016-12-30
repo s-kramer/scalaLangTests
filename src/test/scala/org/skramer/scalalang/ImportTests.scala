@@ -28,5 +28,21 @@ class ImportTests extends FlatSpecWithMatchers {
       first shouldBe 5
       second shouldBe 15
     }
+
+    checkFoo(new Foo)
+  }
+
+  "specific imports" can "be excluded from a batch import" in {
+    def checkFoo(f: Foo) = {
+      import f.{baz => _, _}
+      bar shouldBe 5
+      assertDoesNotCompile(
+        """
+          |val i = baz
+        """.stripMargin)
+    }
+
+    checkFoo(new Foo)
+
   }
 }
