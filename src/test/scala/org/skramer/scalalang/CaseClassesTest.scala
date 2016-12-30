@@ -130,4 +130,14 @@ class CaseClassesTest extends FlatSpecWithMatchers {
 
     matchTypedArgument(Map(1 -> 1)) shouldBe Some("Map[String, String]") // :(
   }
+
+  "pattern matching" can "bind variables to partial matches" in {
+    val b = BinOp("op", Num(1), Num(2))
+    val result = b match {
+      case BinOp(_, e@Num(_), _) => e
+    }
+
+    result shouldBe Num(1)
+  }
 }
+
