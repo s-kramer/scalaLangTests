@@ -1,5 +1,15 @@
 package org.skramer.scalalang
 
+class Expr
+
+case class Var(name: String) extends Expr
+
+case class Num(num: Int) extends Expr
+
+case class UnOp(op: String, arg: Expr) extends Expr
+
+case class BinOp(op: String, left: Expr, right: Expr) extends Expr
+
 /**
   * Created by skramer on 30.12.16.
   */
@@ -69,18 +79,55 @@ class CaseClassesTest extends FlatSpecWithMatchers {
   }
 
   "pattern matching" should "support deep matching" in {
-    class Expr
-    case class Var(name: String) extends Expr
-    case class Number(num: Int) extends Expr
-    case class UnOp(op: String, arg: Expr) extends Expr
-    case class BinOp(op: String, left: Expr, right: Expr) extends Expr
 
     def threeLevelDeepMatch(expr: Expr): Boolean = expr match {
-      case BinOp(_, _, Number(0)) => true
+      case BinOp(_, _, Num(0)) => true
       case _ => false
     }
 
-    threeLevelDeepMatch(BinOp("", Var("variable"), Number(0))) should be(true)
+    threeLevelDeepMatch(BinOp("", Var("variable"), Num(0))) should be(true)
   }
 
+  "pattern matching" can "match against sequences" in {
+    List(1, 2, 3) match {
+      case List(5, _* /*match any number*/) => fail
+      case List(1, _, 3) => succeed
+      case _ => fail
+    }
+  }
+
+  "pattern matching" can "match against a tupple" in {
+    (1, 2, 3) match {
+      case (_, _, 5) => fail
+      case (_, _, _) => succeed
+    }
+  }
+
+  "pattern matching" can "perform typed matching" in {
+    val b: Expr = BinOp("op", Num(1), Var("variable"))
+    b match {
+      case n: Num => fail
+      case v: Var => fail
+      case u: UnOp => fail
+      case b: BinOp => succeed
+    }
+  }
+
+  "pattern matching" can "extract and assign fields of a tuple" in {
+    def returnATupple = (1, 2)
+
+    val (first, second) = returnATupple
+    first shouldBe 1
+    second shouldBe 2
+  }
+
+  "pattern matching" can "suffer from type erasure" in {
+    def matchTypedArgument(arg: Any): Option[String] = arg match {
+      case mapWithStrings: Map[String, String] => Some("Map[String, String]")
+      case mapWithInts: Map[Int, Int] => Some("Map[Int, Int]")
+      case _ => None
+    }
+
+    matchTypedArgument(Map(1 -> 1)) shouldBe Some("Map[String, String]") // :(
+  }
 }
