@@ -119,6 +119,10 @@ class CaseClassesTest extends FlatSpecWithMatchers {
     val (first, second) = returnATupple
     first shouldBe 1
     second shouldBe 2
+
+    val surprisingFirst, surprisingSecond = returnATupple
+    surprisingFirst shouldBe(1, 2)
+    surprisingSecond shouldBe(1, 2)
   }
 
   "pattern matching" can "suffer from type erasure" in {
