@@ -125,6 +125,13 @@ class CaseClassesTest extends FlatSpecWithMatchers {
     surprisingSecond shouldBe(1, 2)
   }
 
+  "elements of a case class" can "be extracted" in {
+    val BinOp(op, v1, v2) = BinOp("op", Num(1), Num(2))
+    op shouldBe "op"
+    v1 shouldBe Num(1)
+    v2 shouldBe Num(2)
+  }
+
   "pattern matching" can "suffer from type erasure" in {
     def matchTypedArgument(arg: Any): Option[String] = arg match {
       case mapWithStrings: Map[String, String] => Some("Map[String, String]")
