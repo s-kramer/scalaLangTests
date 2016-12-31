@@ -182,5 +182,18 @@ class CaseClassesTest extends FlatSpecWithMatchers {
     partialFunction.isDefinedAt(List(1, 2, 3)) shouldBe true
     partialFunction.isDefinedAt(Nil) shouldBe false
   }
+
+  "for expression with pattern matching" should "filter out non-matching elements" in {
+    val values = List(Some(1), None, Some(3), None, Some(15))
+
+    (for (Some(i) <- values) yield i) should be(1 :: 3 :: 15 :: Nil)
+  }
+
+  "for expression with pattern matching" should "filter out non-matching elements 2" in {
+    val values = List(BinOp("op", Num(1), Num(2)), Num(1), Var("aaa"))
+
+    (for (Var(i) <- values) yield i) should be("aaa" :: Nil)
+  }
+
 }
 
