@@ -1,6 +1,6 @@
 package org.skramer.scalalang
 
-class Expr
+abstract sealed class Expr
 
 case class Var(name: String) extends Expr
 
@@ -133,7 +133,7 @@ class CaseClassesTest extends FlatSpecWithMatchers {
 
   "pattern matching" can "bind variables to partial matches" in {
     val b = BinOp("op", Num(1), Num(2))
-    val result = b match {
+    val result = (b: @unchecked) match {
       case BinOp(_, e@Num(_), _) => e
     }
 
@@ -149,6 +149,12 @@ class CaseClassesTest extends FlatSpecWithMatchers {
     BinOp("op", Num(1), Num(1)) match {
       //      case BinOp(_, x, x) => succeed // This can't work
       case BinOp(_, x, y) if x == y => succeed // this matches only if two operands are equal
+    }
+  }
+
+  "pattern matching" should "produce warnings on non-exhaustive matches of sealed class" in {
+    def matchAnyExpr(expr: Expr) = (expr: @unchecked) match {
+      case Var(_) => fail
     }
   }
 }
