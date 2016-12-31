@@ -168,5 +168,19 @@ class CaseClassesTest extends FlatSpecWithMatchers {
       case Var(_) => fail
     }
   }
+
+  "pattern matching" can "be queried for argument support with partial functions" in {
+    val partiallyApplicableFunction: List[Int] => Int = {
+      case _ :: y :: _ => y
+    }
+    partiallyApplicableFunction(List(1, 2, 3)) shouldBe 2
+    assertThrows[MatchError](partiallyApplicableFunction(Nil))
+
+    val partialFunction: PartialFunction[List[Int], Int] = {
+      case _ :: y :: _ => y
+    }
+    partialFunction.isDefinedAt(List(1, 2, 3)) shouldBe true
+    partialFunction.isDefinedAt(Nil) shouldBe false
+  }
 }
 
