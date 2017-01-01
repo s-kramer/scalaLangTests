@@ -111,4 +111,12 @@ class ListTest extends FlatSpecWithMatchers {
   "multidimensional list" can "be flatten" in {
     List(List(1, 2, 3), List(), List(4, 5, 6)).flatten should be((1 to 6).toList)
   }
+
+  "list" can "be zipped with another list" in {
+    (1 to 10).toList zip ('a' to 'z') should have length 10
+  }
+
+  "list of tuples" can "be unzipped" in {
+    List(1 -> 'a', 2 -> 'b', 3 -> 'c').unzip shouldBe(List(1, 2, 3), List('a', 'b', 'c'))
+  }
 }
