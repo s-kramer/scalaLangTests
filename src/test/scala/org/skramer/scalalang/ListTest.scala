@@ -18,4 +18,9 @@ class ListTest extends FlatSpecWithMatchers {
         |val listOfInt: List[Int] = listOfAny
       """)
   }
+
+  "list of Nothing" should "be assignable to list of any type" in {
+    val listOfNothing: List[Nothing] = List()
+    val listOfInt: List[Int] = listOfNothing
+  }
 }
