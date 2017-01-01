@@ -10,4 +10,12 @@ class ListTest extends FlatSpecWithMatchers {
 
     listOfAny should be(a[List[_]])
   }
+
+  "list" should "not be contravariant" in {
+    val listOfAny: List[Any] = List(1, 2, 3, 4)
+    assertDoesNotCompile(
+      """"
+        |val listOfInt: List[Int] = listOfAny
+      """)
+  }
 }
