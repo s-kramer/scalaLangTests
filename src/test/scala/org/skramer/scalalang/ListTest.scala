@@ -28,4 +28,19 @@ class ListTest extends FlatSpecWithMatchers {
     val listOfInt = 1 :: 2 :: 3 :: Nil
     listOfInt shouldBe List(1, 2, 3)
   }
+
+  "insertion sort algorithm" can "be implementable using list" in {
+    def isort(list: List[Int]): List[Int] = {
+      if (list.isEmpty) Nil
+      else insert(list.head, isort(list.tail))
+    }
+
+    def insert(x: Int, xs: List[Int]): List[Int] = {
+      if (xs.isEmpty || x <= xs.head) x :: xs
+      else xs.head :: insert(x, xs.tail)
+    }
+
+    val listToBeSorted = List(1, 5, 3, 56, 8, 4)
+    isort(listToBeSorted) shouldBe List(1, 3, 4, 5, 8, 56)
+  }
 }
