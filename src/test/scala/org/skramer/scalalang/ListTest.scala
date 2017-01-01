@@ -24,9 +24,10 @@ class ListTest extends FlatSpecWithMatchers {
     val listOfInt: List[Int] = listOfNothing
   }
 
+  val oneTwoThree = List(1, 2, 3)
   "list" can "be created using (right-associative) cons" in {
     val listOfInt = 1 :: 2 :: 3 :: Nil
-    listOfInt shouldBe List(1, 2, 3)
+    listOfInt shouldBe oneTwoThree
   }
 
   "insertion sort algorithm" can "be implementable using list" in {
@@ -96,20 +97,21 @@ class ListTest extends FlatSpecWithMatchers {
       }
     }
 
-    concat(List(1, 2, 3), List(4, 5, 6)) should be(1 to 6)
+    concat(oneTwoThree, List(4, 5, 6)) should be(1 to 6)
   }
 
+  val abc = List('a', 'b', 'c')
   "list" can "be iterated with indices" in {
-    val list = List('a', 'b', 'c')
+    val list = abc
     (for ((el, idx) <- list.zipWithIndex) yield idx -> el).toMap should be(Map(0 -> 'a', 1 -> 'b', 2 -> 'c'))
   }
 
   "list indices" can "be obtained" in {
-    List(1, 2, 3).indices should be(0 to 2)
+    oneTwoThree.indices should be(0 to 2)
   }
 
   "multidimensional list" can "be flatten" in {
-    List(List(1, 2, 3), List(), List(4, 5, 6)).flatten should be((1 to 6).toList)
+    List(oneTwoThree, List(), List(4, 5, 6)).flatten should be((1 to 6).toList)
   }
 
   "list" can "be zipped with another list" in {
@@ -117,6 +119,13 @@ class ListTest extends FlatSpecWithMatchers {
   }
 
   "list of tuples" can "be unzipped" in {
-    List(1 -> 'a', 2 -> 'b', 3 -> 'c').unzip shouldBe(List(1, 2, 3), List('a', 'b', 'c'))
+    List(1 -> 'a', 2 -> 'b', 3 -> 'c').unzip shouldBe(oneTwoThree, abc)
   }
+
+  "collection" can "be turned into a string" in {
+    oneTwoThree.mkString("^", " ", "$") should be("^1 2 3$")
+    val sb = new StringBuilder
+    oneTwoThree.addString(sb, "[", ",", "]").toString() shouldBe "[1,2,3]"
+  }
+
 }
