@@ -149,7 +149,7 @@ class ListTest extends FlatSpecWithMatchers {
       (xss :\ List[Int]()) (_ ::: _)
     }
 
-    flatten(List(oneTwoThree, List(), List(4, 5, 6))) shouldBe (1 to 6).toList
+    flatten(List(oneTwoThree, List(), List(4, 5, 6))) shouldBe List.range(1, 7)
   }
 
   "list" can "be sorted using provided predicate" in {
