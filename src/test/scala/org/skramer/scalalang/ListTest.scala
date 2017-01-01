@@ -128,4 +128,35 @@ class ListTest extends FlatSpecWithMatchers {
     oneTwoThree.addString(sb, "[", ",", "]").toString() shouldBe "[1,2,3]"
   }
 
+  "list reversing" can "be implemented using folds" in {
+    def reverse(xs: List[Int]): List[Int] = {
+      (List[Int]() /: xs) ((acc, x) => x :: acc)
+    }
+
+    reverse(oneTwoThree) should be(oneTwoThree.reverse)
+  }
+
+  "list" can "be turned into a string using folding" in {
+    def concat(xs: List[String]): String = {
+      (xs.head /: xs.tail) (_ + " " + _)
+    }
+
+    concat(List("quick", "brown", "fox")) shouldBe "quick brown fox"
+  }
+
+  "list" can "be flatten using folding" in {
+    def flatten(xss: List[List[Int]]): List[Int] = {
+      (xss :\ List[Int]()) (_ ::: _)
+    }
+
+    flatten(List(oneTwoThree, List(), List(4, 5, 6))) shouldBe (1 to 6).toList
+  }
+
+  "list" can "be sorted using provided predicate" in {
+    val unsortedList = List(1, 44, 12, 99, 9, 81)
+    val sortedList = List(1, 9, 12, 44, 81, 99)
+    unsortedList sortWith (_ < _) shouldBe sortedList
+    unsortedList sortWith (_ > _) shouldBe sortedList.reverse
+  }
+
 }
