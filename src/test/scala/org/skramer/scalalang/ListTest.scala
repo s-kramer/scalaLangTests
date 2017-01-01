@@ -163,4 +163,13 @@ class ListTest extends FlatSpecWithMatchers {
     List.range(9, 1, -3) shouldBe List(9, 6, 3)
   }
 
+  "list fill" can "be implemented in term of list tabulate" in {
+    List.tabulate(5)(_ => 1) shouldBe List.fill(5)(1)
+  }
+
+  "list tabulate" can "create a list" in {
+    List.tabulate(6)(x => x * x) shouldBe List(0, 1, 4, 9, 16, 25)
+    List.tabulate(3)(x => List.range(0, x)) shouldBe List(List(), List(0), List(0, 1))
+  }
+
 }
