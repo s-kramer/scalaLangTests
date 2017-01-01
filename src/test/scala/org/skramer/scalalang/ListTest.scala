@@ -87,4 +87,24 @@ class ListTest extends FlatSpecWithMatchers {
     val listToBeSorted = List(1, 5, 3, 56, 8, 4)
     msort((_: Int) < (_: Int))(listToBeSorted) shouldBe List(1, 3, 4, 5, 8, 56)
   }
+
+  "list concatenation" can "be implemented using pattern matching" in {
+    def concat(xs: List[Int], ys: List[Int]): List[Int] = {
+      xs match {
+        case Nil => ys
+        case z :: zs => z :: concat(zs, ys)
+      }
+    }
+
+    concat(List(1, 2, 3), List(4, 5, 6)) should be(1 to 6)
+  }
+
+  "list" can "be iterated with indices" in {
+    val list = List('a', 'b', 'c')
+    (for ((el, idx) <- list.zipWithIndex) yield idx -> el).toMap should be(Map(0 -> 'a', 1 -> 'b', 2 -> 'c'))
+  }
+
+  "list indices" can "be obtained" in {
+    List(1, 2, 3).indices should be(0 to 2)
+  }
 }
