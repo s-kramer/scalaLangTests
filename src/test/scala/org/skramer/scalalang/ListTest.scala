@@ -159,4 +159,8 @@ class ListTest extends FlatSpecWithMatchers {
     unsortedList sortWith (_ > _) shouldBe sortedList.reverse
   }
 
+  "list range" can "use specific step" in {
+    List.range(9, 1, -3) shouldBe List(9, 6, 3)
+  }
+
 }
