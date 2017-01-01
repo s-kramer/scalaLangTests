@@ -107,4 +107,8 @@ class ListTest extends FlatSpecWithMatchers {
   "list indices" can "be obtained" in {
     List(1, 2, 3).indices should be(0 to 2)
   }
+
+  "multidimensional list" can "be flatten" in {
+    List(List(1, 2, 3), List(), List(4, 5, 6)).flatten should be((1 to 6).toList)
+  }
 }
