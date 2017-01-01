@@ -23,4 +23,9 @@ class ListTest extends FlatSpecWithMatchers {
     val listOfNothing: List[Nothing] = List()
     val listOfInt: List[Int] = listOfNothing
   }
+
+  "list" can "be created using (right-associative) cons" in {
+    val listOfInt = 1 :: 2 :: 3 :: Nil
+    listOfInt shouldBe List(1, 2, 3)
+  }
 }
