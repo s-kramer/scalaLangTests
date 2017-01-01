@@ -43,4 +43,28 @@ class ListTest extends FlatSpecWithMatchers {
     val listToBeSorted = List(1, 5, 3, 56, 8, 4)
     isort(listToBeSorted) shouldBe List(1, 3, 4, 5, 8, 56)
   }
+
+  "merge sort" can "be implemented with list and pattern matching" in {
+    def msort[T](less: (T, T) => Boolean)(xs: List[T]): List[T] = {
+      def merge(xs: List[T], ys: List[T]): List[T] = {
+        (xs, ys) match {
+          case (Nil, _) => ys
+          case (_, Nil) => xs
+          case (x :: xs1, y :: ys1) => if (less(x, y)) x :: merge(xs1, ys) else y :: merge(xs, ys1)
+        }
+      }
+
+      val size = xs.size
+      if (size == 1) {
+        xs
+      }
+      else {
+        val (ys, zs) = xs.splitAt(size / 2)
+        merge(msort(less)(ys), msort(less)(zs))
+      }
+    }
+
+    val listToBeSorted = List(1, 5, 3, 56, 8, 4)
+    msort((_: Int) < (_: Int))(listToBeSorted) shouldBe List(1, 3, 4, 5, 8, 56)
+  }
 }
