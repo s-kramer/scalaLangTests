@@ -172,4 +172,8 @@ class ListTest extends FlatSpecWithMatchers {
     List.tabulate(3)(x => List.range(0, x)) shouldBe List(List(), List(0), List(0, 1))
   }
 
+  "tuples of lists" can "be zipped with each other" in {
+    (List(1, 2, 3), List(4, 5, 6)).zipped.map(_ * _) shouldBe List(4, 10, 18)
+  }
+
 }
