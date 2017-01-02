@@ -1,5 +1,6 @@
 package org.skramer.scalalang
 
+import scala.collection.immutable.TreeSet
 import scala.collection.mutable.{Set => MSet, TreeSet => MTreeSet}
 
 /**
@@ -50,6 +51,21 @@ class OtherCollectionsTest extends FlatSpecWithMatchers {
     s --= List(3, 4)
 
     s should contain inOrder(1, 2, 5)
+  }
+
+  "immutable collection" can "be extended with new elements with +=" in {
+    var s = TreeSet(1, 2, 3) // var not val required to reassign the modified collection later
+    s should contain allOf(1, 2, 3)
+    s += 4
+    s should contain allOf(1, 2, 3, 4)
+  }
+
+  "any kind of value" can "be reassigned using +=" in {
+    var f = 1F / 3F
+    assert(f === 0.333F +- 0.001F)
+
+    f += 1F / 3F
+    assert(f === 0.666F +- 0.001F)
   }
 
 }
