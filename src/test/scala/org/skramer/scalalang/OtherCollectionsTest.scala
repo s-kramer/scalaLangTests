@@ -39,9 +39,9 @@ class OtherCollectionsTest extends FlatSpecWithMatchers {
     s & Set(1, 2, 7) shouldBe Set(1, 2)
   }
 
-  "tree set" should "retain the order of elements" in {
+  "tree set" should "keep the elements ordered" in {
     val s = MTreeSet.empty[Int]
-    s ++= List(1, 2, 3, 4, 5)
+    s ++= List(5, 4, 3, 2, 1)
     s += 1
     s += 2
     s += 3
@@ -66,6 +66,11 @@ class OtherCollectionsTest extends FlatSpecWithMatchers {
 
     f += 1F / 3F
     assert(f === 0.666F +- 0.001F)
+  }
+
+  "immutable collection" can "be initialized with another collection" in {
+    val s = TreeSet.empty[Int] ++ List(4, 3, 2, 1)
+    s should contain inOrderOnly(1, 2, 3, 4)
   }
 
 }
