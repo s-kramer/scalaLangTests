@@ -1,6 +1,6 @@
 package org.skramer.scalalang
 
-import scala.collection.mutable.{Set => MSet}
+import scala.collection.mutable.{Set => MSet, TreeSet => MTreeSet}
 
 /**
   * Created by skramer on 02.01.17.
@@ -24,13 +24,32 @@ class OtherCollectionsTest extends FlatSpecWithMatchers {
 
   "mutable set" can "be expanded with elements" in {
     val s = MSet.empty[Int]
+    s ++= List(1, 2, 3, 4, 5)
     s += 1
-    s += 1
-    s += 2
     s += 2
     s += 3
+    s += 4
 
-    s should be(MSet(1, 2, 3))
+    s -= 3
+    s --= List(3, 4)
+
+    s should be(MSet(1, 2, 5))
+
+    s & Set(1, 2, 7) shouldBe Set(1, 2)
+  }
+
+  "tree set" should "retain the order of elements" in {
+    val s = MTreeSet.empty[Int]
+    s ++= List(1, 2, 3, 4, 5)
+    s += 1
+    s += 2
+    s += 3
+    s += 4
+
+    s -= 3
+    s --= List(3, 4)
+
+    s should contain inOrder(1, 2, 5)
   }
 
 }
