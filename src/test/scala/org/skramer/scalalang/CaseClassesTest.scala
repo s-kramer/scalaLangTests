@@ -1,14 +1,6 @@
 package org.skramer.scalalang
 
-abstract sealed class Expr
-
-case class Var(name: String) extends Expr
-
-case class Num(num: Int) extends Expr
-
-case class UnOp(op: String, arg: Expr) extends Expr
-
-case class BinOp(op: String, left: Expr, right: Expr) extends Expr
+import org.skramer.scalalang.expr._
 
 /**
   * Created by skramer on 30.12.16.
