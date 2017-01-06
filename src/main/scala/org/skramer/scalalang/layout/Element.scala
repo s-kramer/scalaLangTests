@@ -49,7 +49,12 @@ abstract class Element {
 
   override def toString: String = s"${content.mkString("\n")}"
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Element]
+  def canEqual(other: Any): Boolean = {
+    other match {
+      case _: Element => true
+      case _ => false
+    }
+  }
 
   override def equals(other: Any): Boolean = other match {
     case that: Element =>
