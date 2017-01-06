@@ -1,6 +1,6 @@
 package org.skramer.scalalang.expr
 
-import org.skramer.scalalag.layout.Element
+import org.skramer.scalalang.layout.Element
 
 /**
   * Based on "Learning scala"

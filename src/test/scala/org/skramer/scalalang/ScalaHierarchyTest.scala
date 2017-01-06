@@ -1,6 +1,6 @@
 package org.skramer.scalalang
 
-import org.skramer.scalalag.layout.Element
+import org.skramer.scalalang.layout.Element
 
 /**
   * Created by skramer on 28.12.16.

@@ -1,6 +1,6 @@
 package org.skramer.scalalang.spiral
 
-import org.skramer.scalalag.layout.Element
+import org.skramer.scalalang.layout.Element
 
 object Spiral {
   val space = Element(" ")

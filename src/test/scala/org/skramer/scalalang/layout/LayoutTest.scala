@@ -1,6 +1,5 @@
 package org.skramer.scalalang.layout
 
-import org.skramer.scalalag.layout.Element
 import org.skramer.scalalang.FlatSpecWithMatchers
 
 /**

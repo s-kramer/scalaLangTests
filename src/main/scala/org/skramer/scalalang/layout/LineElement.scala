@@ -1,4 +1,4 @@
-package org.skramer.scalalag.layout
+package org.skramer.scalalang.layout
 
 /**
   * Created by skramer on 23.12.16.
