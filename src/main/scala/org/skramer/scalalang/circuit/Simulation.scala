@@ -14,6 +14,7 @@ abstract class Simulation {
 
   private var agenda: List[WorkItem] = List()
 
+  @SuppressWarnings(Array("TraversableHead"))
   private def insert(items: List[WorkItem], workItem: WorkItem): List[WorkItem] = {
     if (items.isEmpty || workItem.delay < items.head.delay) {
       workItem :: items
