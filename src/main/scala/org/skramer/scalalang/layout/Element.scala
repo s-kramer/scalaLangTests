@@ -66,7 +66,7 @@ abstract class Element {
   }
 
   override def hashCode(): Int = {
-    val state = Seq(width, height, content)
+    val state: Seq[Any] = Seq(width, height, content)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
 }
