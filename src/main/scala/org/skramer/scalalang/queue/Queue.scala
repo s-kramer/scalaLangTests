@@ -1,7 +1,7 @@
 package org.skramer.scalalang.queue
 
 /**
-  * Created by skramer on 07.01.17.
+  * If all operations are called with the same frequency then this solution has constant asymptotic complexity.
   */
 class Queue[T] private(initialLeading: List[T], initialTrailing: List[T]) {
   private val leading = initialLeading
@@ -11,7 +11,7 @@ class Queue[T] private(initialLeading: List[T], initialTrailing: List[T]) {
 
   private def mirror: Queue[T] = {
     if (leading.isEmpty) {
-      new Queue(trailing.reverse, Nil)
+      new Queue(trailing.reverse, Nil) //potentially expensive operation
     } else {
       this
     }

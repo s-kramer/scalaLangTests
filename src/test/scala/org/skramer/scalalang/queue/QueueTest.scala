@@ -22,4 +22,15 @@ class QueueTest extends FlatSpecWithMatchers {
     newQ.tail.tail.head shouldBe 3
     newQ.tail.tail.tail.head shouldBe 4
   }
+
+  "initially empty queue" can "be extended with elements" in {
+    val q = new Queue(List[Int]())
+    // q.leading is now empty
+    val newQ = q.enqueue(1).enqueue(2).enqueue(3)
+    // newQ.leading is still empty
+
+    newQ.head shouldBe 1 //this calls mirror and reverses the trailing list on every invocation
+    newQ.tail.head shouldBe 2 // tail calls mirror, head is performed on an non-empty leading list
+    newQ.tail.tail.head shouldBe 3 //first tail calls mirror, other operations don't need to
+  }
 }
