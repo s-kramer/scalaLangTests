@@ -36,6 +36,7 @@ abstract class Element {
 
   def content: Array[String]
 
+  @SuppressWarnings(Array("org.wartremover.warts.NoNeedForMonad"))
   def beside(other: Element): Element = {
     val this1 = this heighten other.height
     val that1 = other heighten height
