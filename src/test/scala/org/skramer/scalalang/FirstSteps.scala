@@ -1,10 +1,12 @@
 package org.skramer.scalalang
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by skramer on 19.12.16.
   */
+@SuppressWarnings(Array("org.wartremover.warts.MutableDataStructures"))
 class FirstSteps extends FlatSpecWithMatchers {
   "val variable" should "remain immutable" in {
     assertDoesNotCompile(
@@ -73,13 +75,35 @@ class FirstSteps extends FlatSpecWithMatchers {
   }
 
   "foreach loop" should "call function with side effects on all elements" in {
-    val numbers = 1 to 5
-    numbers.foreach(num => println(num))
-    numbers.foreach((num: Int) => println(num))
-    numbers.foreach(println)
+    val buffer = ListBuffer[Int]()
 
-    val m = Map[Int, Char](1 -> 'a', 2 -> 'b')
-    m.foreach { case (i, j) => println(s"$i is bound to $j") }
+    def addToBuffer(arg: Int): Unit = {
+      buffer += arg
+    }
+
+    val numbers = 1 to 5
+    val expectedList = List.range(1, 6)
+
+    numbers.foreach(num => addToBuffer(num))
+    buffer.toList should be(expectedList)
+    buffer.clear()
+
+    numbers.foreach((num: Int) => addToBuffer(num))
+    buffer.toList should be(expectedList)
+    buffer.clear()
+
+    numbers.foreach(addToBuffer)
+    buffer.toList should be(expectedList)
+    buffer.clear()
+
+    def makeTeststring(i: Int, j: Int) = {
+      s"$i is bound to $j"
+    }
+
+    val stringBuffer = new ListBuffer[String]()
+    val m = Map[Int, Int](1 -> 100, 2 -> 101)
+    m.foreach { case (i, j) => stringBuffer += makeTeststring(i, j) }
+    stringBuffer.toList shouldBe List(makeTeststring(1, 100), makeTeststring(2, 101))
   }
 
   "for expression" should "surprisingly, iterate over elements from generator" in {

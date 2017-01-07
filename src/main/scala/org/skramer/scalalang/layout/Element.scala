@@ -1,5 +1,7 @@
 package org.skramer.scalalang.layout
 
+import org.skramer.scalalang.`implicit`.ImplicitConversions.AnyOps
+
 /**
   * Created by skramer on 23.12.16.
   */
@@ -28,7 +30,7 @@ abstract class Element {
     }
   }
 
-  def width: Int = if (content.length == 0) 0 else content(0).length
+  def width: Int = if (content.length === 0) 0 else content(0).length
 
   def height: Int = content.length
 
@@ -59,12 +61,13 @@ abstract class Element {
   override def equals(other: Any): Boolean = other match {
     case that: Element =>
       (that canEqual this) &&
-        width == that.width &&
-        height == that.height &&
+        width === that.width &&
+        height === that.height &&
         (content sameElements that.content)
     case _ => false
   }
 
+  @SuppressWarnings(Array("org.wartremover.warts.Any"))
   override def hashCode(): Int = {
     val state: Seq[Any] = Seq(width, height, content)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)

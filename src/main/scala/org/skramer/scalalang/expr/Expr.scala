@@ -5,10 +5,10 @@ package org.skramer.scalalang.expr
   */
 abstract sealed class Expr
 
-case class Var(name: String) extends Expr
+final case class Var(name: String) extends Expr
 
-case class Num(num: Int) extends Expr
+final case class Num(num: Int) extends Expr
 
-case class UnOp(op: String, arg: Expr) extends Expr
+final case class UnOp(op: String, arg: Expr) extends Expr
 
-case class BinOp(op: String, left: Expr, right: Expr) extends Expr
+final case class BinOp(op: String, left: Expr, right: Expr) extends Expr

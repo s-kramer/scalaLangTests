@@ -10,7 +10,7 @@ class ScalaHierarchyTest extends FlatSpecWithMatchers {
     val first = Element("qwerty")
     val second = Element("qwerty")
 
-    assert(first == second)
+    assert(first === second)
   }
 
   "eq" should "compare using referential equality" in {

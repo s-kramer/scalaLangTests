@@ -1,5 +1,6 @@
 package org.skramer.scalalang.expr
 
+import org.skramer.scalalang.`implicit`.ImplicitConversions.AnyOps
 import org.skramer.scalalang.layout.Element
 
 /**
@@ -44,7 +45,7 @@ class ExprFormatter {
         val middle = Element('-', top.width max bottom.width, 1)
         val frac = top above middle above bottom
 
-        if (enclPrec != fractionPrecedence) {
+        if (enclPrec !== fractionPrecedence) {
           frac
         }
         else {

@@ -6,12 +6,18 @@ package org.skramer.scalalang
 class ListTest extends FlatSpecWithMatchers {
   "list" should "be covariant" in {
     val listOfInt = List(1, 2, 3, 4)
-    val listOfAny: List[Any] = listOfInt
 
-    listOfAny should be(a[List[_]])
+    @SuppressWarnings(Array("org.wartremover.warts.Nothing", "org.wartremover.warts.Any"))
+    def assignListOfIntToListOfAny = {
+      val listOfAny: List[Any] = listOfInt
+      listOfAny should be(a[List[_]])
+    }
+
+    assignListOfIntToListOfAny
   }
 
   "list" should "not be contravariant" in {
+    @SuppressWarnings(Array("org.wartremover.warts.Any"))
     val listOfAny: List[Any] = List(1, 2, 3, 4)
     assertDoesNotCompile(
       """"
@@ -76,7 +82,7 @@ class ListTest extends FlatSpecWithMatchers {
       }
 
       val size = xs.size
-      if (size == 1) {
+      if (size === 1) {
         xs
       }
       else {

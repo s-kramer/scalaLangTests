@@ -5,14 +5,17 @@ import org.skramer.scalalang.expr._
 /**
   * Created by skramer on 30.12.16.
   */
+@SuppressWarnings(Array("org.wartremover.warts.Nothing"))
 class CaseClassesTest extends FlatSpecWithMatchers {
   "case classes" should "get a factory method, fields and method implementations by default" in {
     case class Foo(value: Int)
     val first, second = Foo(5)
     first.value should be(5)
     second.value should be(5)
-    assert(first == second)
-    first.toString shouldBe "Foo(5)"
+    assert(first === second)
+    @SuppressWarnings(Array("org.wartremover.warts.ToString"))
+    val firstToString = first.toString
+    firstToString shouldBe "Foo(5)"
   }
 
   "case classes" can "be copied with partial modifications" in {
@@ -53,6 +56,7 @@ class CaseClassesTest extends FlatSpecWithMatchers {
   "pattern matching" should "recognize constants by uppercase" in {
     import math.Pi
     val result = 3.14 match {
+      //linter:ignore PatternMatchConstant
       case Pi => "pi"
       case pi => "not a pi"
     }
@@ -63,6 +67,7 @@ class CaseClassesTest extends FlatSpecWithMatchers {
   "pattern matching" can "enforce lowercase to be recognized as constant by backtics" in {
     import math.{Pi => pi}
     val result = math.Pi match {
+      //linter:ignore PatternMatchConstant
       case `pi` => "pi"
       case notAPi => "not a pi"
     }
@@ -145,13 +150,13 @@ class CaseClassesTest extends FlatSpecWithMatchers {
 
   "pattern matching" can "have pattern guards" in {
     Num(15) match {
-      case Num(v) if v == 1 => fail
+      case Num(v) if v === 1 => fail
       case Num(v) if v >= 15 => succeed
     }
 
     BinOp("op", Num(1), Num(1)) match {
       //      case BinOp(_, x, x) => succeed // This can't work
-      case BinOp(_, x, y) if x == y => succeed // this matches only if two operands are equal
+      case BinOp(_, x, y) if x === y => succeed // this matches only if two operands are equal
     }
   }
 
@@ -182,7 +187,7 @@ class CaseClassesTest extends FlatSpecWithMatchers {
   }
 
   "for expression with pattern matching" should "filter out non-matching elements 2" in {
-    val values = List(BinOp("op", Num(1), Num(2)), Num(1), Var("aaa"))
+    val values: List[Expr] = List[Expr](BinOp("op", Num(1), Num(2)), Num(1), Var("aaa"))
 
     (for (Var(i) <- values) yield i) should be("aaa" :: Nil)
   }

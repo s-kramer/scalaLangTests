@@ -6,6 +6,7 @@ import scala.collection.mutable.{Set => MSet, TreeSet => MTreeSet}
 /**
   * Created by skramer on 02.01.17.
   */
+@SuppressWarnings(Array("org.wartremover.warts.MutableDataStructures"))
 class OtherCollectionsTest extends FlatSpecWithMatchers {
   "list buffer" can "create a list by appending and prepending in constant time" in {
     val buf = new collection.mutable.ListBuffer[Int]

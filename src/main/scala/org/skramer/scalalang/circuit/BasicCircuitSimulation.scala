@@ -1,5 +1,7 @@
 package org.skramer.scalalang.circuit
 
+import org.skramer.scalalang.`implicit`.ImplicitConversions.AnyOps
+
 /**
   * Created by skramer on 06.01.17.
   */
@@ -16,7 +18,7 @@ abstract class BasicCircuitSimulation extends Simulation {
     def getSignal: Boolean = sigVal
 
     def setSignal(newSignalValue: Boolean): Unit = {
-      if (sigVal != newSignalValue) {
+      if (sigVal !== newSignalValue) {
         sigVal = newSignalValue
         actions foreach (_ ())
       }

@@ -6,12 +6,11 @@ package org.skramer.scalalang
 class FunctionalObjectTest extends FlatSpecWithMatchers {
   "constructor params of other objects" should "not be accessible from this object" in {
     class Foo(i: Int) {
-      def add(f: Foo): Int = {
+      def add(f: Foo): Unit = {
         assertDoesNotCompile(
           """
             |i + f.i
           """.stripMargin)
-        0
       }
     }
   }

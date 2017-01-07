@@ -110,6 +110,7 @@ class RationalTest extends FlatSpecWithMatchers {
   "implicit conversion" should "enable multiplying int by rational" in {
     val r = new Rational(3, 4)
 
+    @SuppressWarnings(Array("org.wartremover.warts.ImplicitConversion"))
     implicit def intToRational(value: Int): Rational = new Rational(value)
 
     val product: Rational = 2 * r

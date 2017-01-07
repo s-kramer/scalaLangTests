@@ -22,7 +22,9 @@ class BasicTypesAndOperatorsTest extends FlatSpecWithMatchers {
 
   "f interpolator" should "default to string interpolator" in {
     val h = "hello"
-    f"$h" should have length 5
+    @SuppressWarnings(Array("org.wartremover.warts.Any"))
+    val s = f"$h"
+    s should have length 5
   }
 
   "f interpolator" should "use printf syntax" in {
@@ -49,19 +51,23 @@ class BasicTypesAndOperatorsTest extends FlatSpecWithMatchers {
 
   "equality operator" should "compare objects of different types" in {
     assertResult(false) {
-      List(1, 2, 3) == true
+      @SuppressWarnings(Array("org.wartremover.warts.Equals"))
+      val result = List(1, 2, 3) == true //linter:ignore UnlikelyEquality
+      result
     }
   }
 
   "equality operator" should "check left handside for null first" in {
     assertResult(false) {
-      null == List(1, 2, 3)
+      @SuppressWarnings(Array("org.wartremover.warts.Null"))
+      val result = List(1, 2, 3) === null
+      result
     }
   }
 
   "equality operator" should "compare based on the contents" in {
     assertResult(true) {
-      List(1, 2, 3).toSet == Set(1, 2, 3)
+      List(1, 2, 3).toSet === Set(1, 2, 3)
     }
   }
 

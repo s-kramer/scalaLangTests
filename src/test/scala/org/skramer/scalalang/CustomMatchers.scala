@@ -11,7 +11,7 @@ trait CustomMatchers extends Matchers {
   class OddMatcher extends BeMatcher[Int] {
     def apply(left: Int) =
       MatchResult(
-        left % 2 != 0,
+        left % 2 !== 0,
         left.toString + " was even",
         left.toString + " was odd"
       )

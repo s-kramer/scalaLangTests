@@ -5,6 +5,7 @@ import org.skramer.scalalang.CustomMatchers._
 /**
   * Created by skramer on 22.12.16.
   */
+@SuppressWarnings(Array("org.wartremover.warts.Return"))
 class ControlStructuresTest extends FlatSpecWithMatchers {
   "for loop" should "iterate over all generates" in {
     val nums = {

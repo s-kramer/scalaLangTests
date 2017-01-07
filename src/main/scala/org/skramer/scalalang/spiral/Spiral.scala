@@ -1,5 +1,6 @@
 package org.skramer.scalalang.spiral
 
+import org.skramer.scalalang.`implicit`.ImplicitConversions.AnyOps
 import org.skramer.scalalang.layout.Element
 
 object Spiral {
@@ -7,7 +8,7 @@ object Spiral {
   val corner = Element("+")
 
   def spiral(nEdges: Int, direction: Int): Element = {
-    if (nEdges == 1) {
+    if (nEdges === 1) {
       Element("+")
     }
     else {
@@ -17,13 +18,13 @@ object Spiral {
 
       def horizontalBar = Element('-', sp.width, 1)
 
-      if (direction == 0) {
+      if (direction === 0) {
         (corner beside horizontalBar) above (sp beside space)
       }
-      else if (direction == 1) {
+      else if (direction === 1) {
         (sp above space) beside (corner above verticalBar)
       }
-      else if (direction == 2) {
+      else if (direction === 2) {
         (space beside sp) above (horizontalBar beside corner)
       }
       else {

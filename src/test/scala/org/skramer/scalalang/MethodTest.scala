@@ -117,7 +117,7 @@ class MethodTest extends FlatSpecWithMatchers {
   "tail call optimization" should "be applied automatically where possible" in {
 
     def throwAfterNIterations(n: Int): Int = {
-      if (n == 0) throw new RuntimeException
+      if (n === 0) throw new RuntimeException
       else throwAfterNIterations(n - 1)
     }
 
@@ -130,7 +130,7 @@ class MethodTest extends FlatSpecWithMatchers {
 
   "tail call optimization" can "not be applied if recursive call is not last" in {
     def throwAfterNIterations(n: Int): Int = {
-      if (n == 0) throw new RuntimeException
+      if (n === 0) throw new RuntimeException
       else throwAfterNIterations(n - 1) + 1
     }
 
