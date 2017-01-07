@@ -7,8 +7,6 @@ class Queue[T] private(initialLeading: List[T], initialTrailing: List[T]) {
   private val leading = initialLeading
   private val trailing = initialTrailing
 
-  def this(leading: T*) = this(leading.toList, Nil)
-
   private def mirror: Queue[T] = {
     if (leading.isEmpty) {
       new Queue(trailing.reverse, Nil) //potentially expensive operation
@@ -25,4 +23,8 @@ class Queue[T] private(initialLeading: List[T], initialTrailing: List[T]) {
   }
 
   def enqueue(newLast: T): Queue[T] = new Queue(leading, newLast :: trailing)
+}
+
+object Queue {
+  def apply[T](initialElements: T*): Queue[T] = new Queue(initialElements.toList, Nil)
 }
