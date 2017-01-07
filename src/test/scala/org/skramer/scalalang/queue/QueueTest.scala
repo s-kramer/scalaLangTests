@@ -33,4 +33,16 @@ class QueueTest extends FlatSpecWithMatchers {
     newQ.tail.head shouldBe 2 // tail calls mirror, head is performed on an non-empty leading list
     newQ.tail.tail.head shouldBe 3 //first tail calls mirror, other operations don't need to
   }
+
+  "queue with lower bound" can "make queues of super type" in {
+    class Foo
+    class Bar extends Foo
+    class Buzz extends Foo
+    val queueOfBuzz: QueueWithLowerBound[Buzz] = Queue.newQueueWithLowerBound(new Buzz, new Buzz)
+    val queueOfFoo: QueueWithLowerBound[Foo] = queueOfBuzz.enqueueWithLower(new Bar) // result is a Queue of supertype
+
+    queueOfFoo.head shouldBe a[Buzz]
+    queueOfFoo.tail.head shouldBe a[Buzz]
+    queueOfFoo.tail.tail.head shouldBe a[Bar]
+  }
 }
