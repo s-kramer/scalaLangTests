@@ -56,4 +56,13 @@ class VarianceTest extends FlatSpecWithMatchers {
 
     barConsumer.consume(new Bar)
   }
+
+  "classes that are both consumers and producers" should "be invariant" in {
+    // no + or - is allowed in type parameter of this class!
+    class ProducerConsumer[A] {
+      def produce: A = ???
+
+      def consume(arg: A): Unit = ???
+    }
+  }
 }
