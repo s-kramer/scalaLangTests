@@ -13,7 +13,7 @@ object Queue {
   /**
     * If all operations are called with the same frequency then this solution has constant asymptotic complexity.
     */
-  class QueueImpl[T] private(initialLeading: List[T], initialTrailing: List[T]) extends Queue[T] {
+  private class QueueImpl[T] private(initialLeading: List[T], initialTrailing: List[T]) extends Queue[T] {
     private val leading = initialLeading
     private val trailing = initialTrailing
 
