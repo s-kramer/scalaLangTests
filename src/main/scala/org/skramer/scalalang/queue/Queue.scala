@@ -13,9 +13,9 @@ object Queue {
   /**
     * If all operations are called with the same frequency then this solution has constant asymptotic complexity.
     */
-  private class QueueImpl[T] private(initialLeading: List[T], initialTrailing: List[T]) extends Queue[T] {
-    private val leading = initialLeading
-    private val trailing = initialTrailing
+  private class QueueImpl[T] private(private val leading: List[T], private val trailing: List[T]) extends Queue[T] {
+
+    def this(queueElements: List[T]) = this(queueElements, Nil)
 
     private def mirror: QueueImpl[T] = {
       if (leading.isEmpty) {
@@ -35,5 +35,6 @@ object Queue {
     def enqueue(newLast: T): QueueImpl[T] = new QueueImpl(leading, newLast :: trailing)
   }
 
-  def apply[T](initialElements: T*): Queue[T] = new QueueImpl[T](initialElements.toList, Nil)
+  def apply[T](initialElements: T*): Queue[T] = new QueueImpl[T](initialElements.toList)
+
 }
