@@ -65,4 +65,14 @@ class VarianceTest extends FlatSpecWithMatchers {
       def consume(arg: A): Unit = ???
     }
   }
+
+  "class with getters and setters" should "not be covariant as it's a special case of no-type-parameter-as-method-argument rule" in {
+    class Foo[+A] {
+      val a: A = ??? //vals are not reassignable
+      assertDoesNotCompile(
+        """
+          | var varA : A // vars have setters generated that take type-parametrized argument
+        """.stripMargin)
+    }
+  }
 }
