@@ -55,8 +55,9 @@ class CaseClassesTest extends FlatSpecWithMatchers {
 
   "pattern matching" should "recognize constants by uppercase" in {
     import math.Pi
-    val result = 3.14 match {
-      //linter:ignore PatternMatchConstant
+    //@formatter:off
+    val result = 3.14 match { //linter:ignore PatternMatchConstant
+    //@formatter:on
       case Pi => "pi"
       case pi => "not a pi"
     }
@@ -66,8 +67,9 @@ class CaseClassesTest extends FlatSpecWithMatchers {
 
   "pattern matching" can "enforce lowercase to be recognized as constant by backtics" in {
     import math.{Pi => pi}
-    val result = math.Pi match {
-      //linter:ignore PatternMatchConstant
+    //@formatter:off
+    val result = math.Pi match { //linter:ignore PatternMatchConstant
+    //@formatter:on
       case `pi` => "pi"
       case notAPi => "not a pi"
     }
