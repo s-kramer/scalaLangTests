@@ -7,7 +7,7 @@ class Queue[T] private(initialLeading: List[T], initialTrailing: List[T]) {
   private val leading = initialLeading
   private val trailing = initialTrailing
 
-  def this(leading: List[T]) = this(leading, Nil)
+  def this(leading: T*) = this(leading.toList, Nil)
 
   private def mirror: Queue[T] = {
     if (leading.isEmpty) {
