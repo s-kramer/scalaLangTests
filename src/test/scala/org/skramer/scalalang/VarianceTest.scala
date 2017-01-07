@@ -42,4 +42,18 @@ class VarianceTest extends FlatSpecWithMatchers {
 
     fooProducer.produce shouldBe a[Bar]
   }
+
+  "classes that are consumers" should "be declared contravariant" in {
+    class Consumer[-A] {
+      def consume(arg: A): Unit = {}
+    }
+
+    class Foo
+    class Bar extends Foo
+
+    val fooConsumer: Consumer[Foo] = new Consumer[Foo]
+    val barConsumer: Consumer[Bar] = fooConsumer
+
+    barConsumer.consume(new Bar)
+  }
 }
