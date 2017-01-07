@@ -1,30 +1,39 @@
 package org.skramer.scalalang.queue
 
-/**
-  * If all operations are called with the same frequency then this solution has constant asymptotic complexity.
-  */
-class Queue[T] private(initialLeading: List[T], initialTrailing: List[T]) {
-  private val leading = initialLeading
-  private val trailing = initialTrailing
+trait Queue[T] {
+  def head: T
 
-  private def mirror: Queue[T] = {
-    if (leading.isEmpty) {
-      new Queue(trailing.reverse, Nil) //potentially expensive operation
-    } else {
-      this
-    }
-  }
+  def tail: Queue[T]
 
-  def head: T = mirror.leading.head
-
-  def tail: Queue[T] = {
-    val mirrored: Queue[T] = mirror
-    new Queue(mirrored.leading.tail, mirrored.trailing)
-  }
-
-  def enqueue(newLast: T): Queue[T] = new Queue(leading, newLast :: trailing)
+  def enqueue(newLast: T): Queue[T]
 }
 
 object Queue {
-  def apply[T](initialElements: T*): Queue[T] = new Queue(initialElements.toList, Nil)
+
+  /**
+    * If all operations are called with the same frequency then this solution has constant asymptotic complexity.
+    */
+  class QueueImpl[T] private(initialLeading: List[T], initialTrailing: List[T]) extends Queue[T] {
+    private val leading = initialLeading
+    private val trailing = initialTrailing
+
+    private def mirror: QueueImpl[T] = {
+      if (leading.isEmpty) {
+        new QueueImpl(trailing.reverse, Nil) //potentially expensive operation
+      } else {
+        this
+      }
+    }
+
+    def head: T = mirror.leading.head
+
+    def tail: QueueImpl[T] = {
+      val mirrored: QueueImpl[T] = mirror
+      new QueueImpl(mirrored.leading.tail, mirrored.trailing)
+    }
+
+    def enqueue(newLast: T): QueueImpl[T] = new QueueImpl(leading, newLast :: trailing)
+  }
+
+  def apply[T](initialElements: T*): Queue[T] = new QueueImpl[T](initialElements.toList, Nil)
 }
