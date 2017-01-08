@@ -75,4 +75,45 @@ class VarianceTest extends FlatSpecWithMatchers {
         """.stripMargin)
     }
   }
+
+  "covariance and contavariance" can "be mixed in a single type" in {
+    class Foo
+    class Bar extends Foo
+
+    val anyToFoo: (Any) => Foo = (arg: Any) => new Foo
+    val barToAny: Function1[Bar, Any] = anyToFoo
+  }
+
+  "covariance and contavariance" can "be mixed in a single type - book example" in {
+    class Publication(val title: String)
+    class Book(title: String, val isbn: String) extends Publication(title)
+
+    object Book {
+      val books: List[Book] = List()
+
+      def iterateOverBooks(infoExtractor: Book => AnyRef): Unit = books.foreach(infoExtractor)
+    }
+
+    val publicationToString: (Publication) => String = {
+      publication => {
+        // argument of type Publication, Book's fields are not available
+        assertDoesNotCompile(
+          """
+            | publication.isbn
+          """.stripMargin)
+
+        publication.title
+      }
+    }
+
+    // you can pass Publication => String to a method that accepts Book => AnyRef because Function1[-S,+T].
+    // Because of its signature, iterateOverBooks is only allowed to pass Books. The passed method is declared
+    // in such a way that it can only use the Publication's fields. Because every method that is declared in Book
+    // is also available in Publication the contravariance works. (The contravariant argument can even be of type Any
+    // if only you can do something with it).
+    // On the otherhand, because the return type of the iterateOverBooks argument is declared contravariant you can
+    // return any type that implements AnyRef, e.g. a String.
+    Book.iterateOverBooks(publicationToString)
+  }
 }
+
