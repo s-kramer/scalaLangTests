@@ -38,11 +38,22 @@ class QueueTest extends FlatSpecWithMatchers {
     class Foo
     class Bar extends Foo
     class Buzz extends Foo
-    val queueOfBuzz: QueueWithLowerBound[Buzz] = Queue.newQueueWithLowerBound(new Buzz, new Buzz)
-    val queueOfFoo: QueueWithLowerBound[Foo] = queueOfBuzz.enqueueWithLower(new Bar) // result is a Queue of supertype
+    val queueOfBuzz: CovariantQueue[Buzz] = Queue.newCovariantQueue(new Buzz, new Buzz)
+    val queueOfFoo: CovariantQueue[Foo] = queueOfBuzz.enqueue(new Bar) // result is a Queue of supertype
 
     queueOfFoo.head shouldBe a[Buzz]
     queueOfFoo.tail.head shouldBe a[Buzz]
     queueOfFoo.tail.tail.head shouldBe a[Bar]
+  }
+
+  "queue with mutating mirror" can "still be pure but can avoid frequent reverse cost of pure mirror" in {
+    val q = Queue.newQueueWithMutatingMirror(1, 2)
+    val threeElementQueue = q.enqueue(3)
+    val fourElementQueue = threeElementQueue.enqueue(4)
+
+    fourElementQueue.head shouldBe 1 // uses non-empty leading
+    fourElementQueue.tail.head shouldBe 2 // still uses non-empty leading
+    fourElementQueue.tail.tail.head shouldBe 3 // head performs the only mirror operation - reverses the trailing and concatenates the lists
+    fourElementQueue.tail.tail.tail.head shouldBe 4 // mirror operation is not required for head as it was already performed and saved in the third tail call
   }
 }
