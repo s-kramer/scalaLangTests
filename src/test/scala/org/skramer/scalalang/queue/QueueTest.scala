@@ -56,4 +56,25 @@ class QueueTest extends FlatSpecWithMatchers {
     fourElementQueue.tail.tail.head shouldBe 3 // head performs the only mirror operation - reverses the trailing and concatenates the lists
     fourElementQueue.tail.tail.tail.head shouldBe 4 // mirror operation is not required for head as it was already performed and saved in the third tail call
   }
+
+  "classes with upper bound Ordered" can "be compared" in {
+    def isLessThan[T <: Ordered[T]](lhs: T, rhs: T): Boolean = {
+      lhs < rhs
+    }
+
+    case class Person(name: String, surname: String) extends Ordered[Person] {
+      override def compare(that: Person): Int = {
+        name.compareToIgnoreCase(that.name) match {
+          case 0 => 0
+          case _ => surname.compareToIgnoreCase(that.surname)
+        }
+      }
+    }
+
+    val person1: Person = Person("qwe", "rty")
+    val person2: Person = Person("abc", "def")
+    val person3: Person = Person("bcd", "efg")
+    person1 should be > person2
+    isLessThan(person2, person3) shouldBe true
+  }
 }
